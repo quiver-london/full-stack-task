@@ -5,8 +5,6 @@
 
 Quiver delivers orders on behalf of it's clients (merchants). An order has line items - a list of products and their respective quantity. An order can only be eligible for Quiver's delivery options if Quiver has record of the products a customer has ordered. Your task is to create a full stack application with persistent storage to support [CRUDL](https://acronyms.thefreedictionary.com/CRUDL#:~:text=Acronym,Read%2C%20Update%2C%20Delete%2C%20List) operations of products. 
 
-### What is a product?
-
 - A product is an named uniquely identifiable item e.g. T-Shirt, Jumper etc.
 - A product is fungible: every instance of a product is equivalent. 
 - A product is specific and unique to a client (a merchant working with Quiver). Products can't be shared between merchants and can't be duplicated within merchants.
