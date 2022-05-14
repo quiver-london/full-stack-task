@@ -20,3 +20,21 @@ func CreateRouterFromStorage(cachedStorage storage.Storage) *mux.Router {
 
 	return r
 }
+
+type CORSRouterDecorator struct {
+	R *mux.Router
+}
+
+func (c *CORSRouterDecorator) ServeHTTP(rw http.ResponseWriter,
+	req *http.Request) {
+	if origin := req.Header.Get("Origin"); origin != "" {
+		rw.Header().Set("Access-Control-Allow-Origin", origin)
+		rw.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PATCH, DELETE")
+		rw.Header().Set("Access-Control-Allow-Headers", "Accept, Accept-Language, Content-Type, YourOwnHeader")
+	}
+	// Stop here if its Preflighted OPTIONS request
+	if req.Method == "OPTIONS" {
+		return
+	}
+	c.R.ServeHTTP(rw, req)
+}

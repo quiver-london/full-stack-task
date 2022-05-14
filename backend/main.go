@@ -16,7 +16,7 @@ func NewServer() *http.Server {
 	router := handler.CreateRouterFromStorage(mongoStorage)
 
 	return &http.Server{
-		Handler:      router,
+		Handler:      &handler.CORSRouterDecorator{R: router},
 		Addr:         "0.0.0.0:8080",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
