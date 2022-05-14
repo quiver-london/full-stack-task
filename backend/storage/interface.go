@@ -23,6 +23,6 @@ type Storage interface {
 	Create(ctx context.Context, data Product) (Product, error)
 	GetProduct(ctx context.Context, name string) (Product, error)
 	Update(ctx context.Context, data Product) (Product, error)
-	//Delete(ctx context.Context, data Product) error
+	Delete(ctx context.Context, productId string) error
 	List(ctx context.Context) ([]Product, error)
 }

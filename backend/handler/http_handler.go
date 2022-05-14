@@ -135,3 +135,14 @@ func (h *HttpHandler) HandleUpdateProduct(w http.ResponseWriter, r *http.Request
 		return
 	}
 }
+
+func (h *HttpHandler) HandleDeleteProduct(w http.ResponseWriter, r *http.Request) {
+	parts := strings.Split(r.URL.Path, "/")
+	productId := parts[len(parts)-1]
+
+	err := h.Storage.Delete(r.Context(), productId)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+}

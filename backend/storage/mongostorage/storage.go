@@ -113,3 +113,19 @@ func (s *storage) Update(ctx context.Context, data storage2.Product) (storage2.P
 	}
 	return data, nil
 }
+
+func (s *storage) Delete(ctx context.Context, productId string) error {
+	objectId, err := primitive.ObjectIDFromHex(productId)
+	if err != nil {
+		return fmt.Errorf("invalid id - %w", storage2.CommonStorageError)
+	}
+	res, err := s.products.DeleteOne(ctx, bson.M{"_id": objectId})
+	if err != nil {
+		return fmt.Errorf("error occurred during deleting item - %w", storage2.CommonStorageError)
+	}
+	if res.DeletedCount == 0 {
+		return fmt.Errorf("product with such id=%s was not found - %w", productId, storage2.ErrorNotFound)
+	}
+	fmt.Printf("Successfully deleted product with id=%s\n", productId)
+	return nil
+}
