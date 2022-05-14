@@ -13,7 +13,9 @@ func CreateRouterFromStorage(cachedStorage storage.Storage) *mux.Router {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/api/v1/products", handler.HandleCreateProduct).Methods(http.MethodPost)
-	r.HandleFunc("/api/v1/products/{postId}", handler.HandleGetProduct).Methods(http.MethodGet)
+	r.HandleFunc("/api/v1/products", handler.HandleListProducts).Methods(http.MethodGet)
+	r.HandleFunc("/api/v1/products/{productId}", handler.HandleGetProduct).Methods(http.MethodGet)
+	r.HandleFunc("/api/v1/products/{productId}", handler.HandleUpdateProduct).Methods(http.MethodPatch)
 
 	return r
 }
