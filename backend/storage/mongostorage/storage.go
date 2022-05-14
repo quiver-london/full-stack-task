@@ -51,12 +51,12 @@ func ensureIndexes(ctx context.Context, collection *mongo.Collection) {
 	}
 }
 
-func (s *storage) Create(ctx context.Context, data storage2.Product) error {
+func (s *storage) Create(ctx context.Context, data storage2.Product) (storage2.Product, error) {
 	_, err := s.products.InsertOne(ctx, data)
 	if err != nil {
-		return fmt.Errorf("something went wrong - %w", storage2.CommonStorageError)
+		return storage2.Product{}, fmt.Errorf("something went wrong - %w", storage2.CommonStorageError)
 	}
-	return nil
+	return data, nil
 }
 
 func (s *storage) GetProduct(ctx context.Context, id string) (storage2.Product, error) {
@@ -74,4 +74,42 @@ func (s *storage) GetProduct(ctx context.Context, id string) (storage2.Product, 
 		return storage2.Product{}, fmt.Errorf("something went wrong - %w", storage2.CommonStorageError)
 	}
 	return result, nil
+}
+
+func (s *storage) List(ctx context.Context) ([]storage2.Product, error) {
+	var allProducts []storage2.Product
+	var product storage2.Product
+	opts := options.Find()
+	var cursor *mongo.Cursor
+	var err error
+	cursor, err = s.products.Find(ctx, opts)
+
+	if err != nil {
+		if errors.Is(err, mongo.ErrNoDocuments) {
+			return []storage2.Product{}, fmt.Errorf("no allProducts were found - %w", storage2.ErrorNotFound)
+		}
+		return []storage2.Product{}, fmt.Errorf("something went wrong - %w", storage2.CommonStorageError)
+	}
+	for cursor.Next(ctx) {
+		err := cursor.Decode(&product)
+		if err != nil {
+			return []storage2.Product{}, err
+		}
+		allProducts = append(allProducts, product)
+	}
+	return allProducts, nil
+}
+
+func (s *storage) Update(ctx context.Context, data storage2.Product) (storage2.Product, error) {
+	update := bson.D{
+		{"$set", bson.M{"name": data.Name}},
+		{"$set", bson.M{"price": data.Price}},
+		{"$set", bson.M{"quantity": data.Quantity}},
+	}
+
+	_, err := s.products.UpdateByID(ctx, data.Id, update)
+	if err != nil {
+		return storage2.Product{}, fmt.Errorf("something went wrong - %w", storage2.CommonStorageError)
+	}
+	return data, nil
 }
