@@ -2,34 +2,34 @@ import React, {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import ProductService from "../services/ProductService";
 
-function saveOrUpdateProduct(e, id, name, price, quantity) {
-    let product = {
-        name: name,
-        price: price,
-        quantity: quantity
-    };
-    if (id === '_add') {
-        ProductService.createProduct(product)
-            .then(r => console.log("product created successfully"))
-    } else {
-        ProductService.updateProduct(product, id)
-            .then(r => console.log("product updated successfully"))
-    }
-}
-
-function getTitle(id) {
-    if (id === '_add') {
-        return <h3 className="text-center">Add Product</h3>
-    } else {
-        return <h3 className="text-center">Update Product</h3>
-    }
-}
-
 export default function Create() {
     const { id } = useParams();
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [quantity, setQuantity] = useState('');
+
+    const saveOrUpdateProduct = (e, id, name, price, quantity) => {
+        let product = {
+            name: name,
+            price: price,
+            quantity: quantity
+        };
+        if (id === '_add') {
+            ProductService.createProduct(product)
+                .then(r => console.log("product created successfully"))
+        } else {
+            ProductService.updateProduct(product, id)
+                .then(r => console.log("product updated successfully"))
+        }
+    }
+
+    const getTitle = (id) => {
+        if (id === '_add') {
+            return <h3 className="text-center">Add Product</h3>
+        } else {
+            return <h3 className="text-center">Update Product</h3>
+        }
+    }
 
     useEffect(() => {
         setName(localStorage.getItem('name'));
