@@ -4,8 +4,8 @@
 
 Quiver has a record of all the products it could deliver on behalf of its merchants but it has no way of visualising this information. Your task is to create a full stack application with persistent storage to support [CRUDL](https://acronyms.thefreedictionary.com/CRUDL#:~:text=Acronym,Read%2C%20Update%2C%20Delete%2C%20List) operations of products. We are not concerned with the inventory levels of products.
 
-- A product is an named uniquely identifiable item e.g. T-Shirt, Pencil etc.
-- A product can have variants (e.g T-Shirt (XS/Black), T-Shirt (S/Green), Pencil (2B), Pencil (HB)
+- A product is identifiable by its name e.g. T-Shirt, Pencil etc.
+- A product can have variations (e.g T-Shirt (XS/Black), T-Shirt (S/Green), Pencil (2B), Pencil (HB)
 - A product is specific and unique to a merchant (e.g Zara, Ryman etc.). Products can't be shared between merchants and can't be duplicated within merchants.
 
 ### Technical requirements
