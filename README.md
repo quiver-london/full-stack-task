@@ -2,16 +2,11 @@
 
 ## Task
 
+Quiver has a record of all the products it could deliver on behalf of its merchants but it has no way of visualising this information. Your task is to create a full stack application with persistent storage to support [CRUDL](https://acronyms.thefreedictionary.com/CRUDL#:~:text=Acronym,Read%2C%20Update%2C%20Delete%2C%20List) operations of products. We are not concerned with the inventory levels of products.
 
-Quiver delivers orders on behalf of its clients (merchants). An order has line items - a list of products and their respective quantity. An order can only be eligible for Quiver's delivery options if Quiver has record of the products a customer has ordered. Your task is to create a full stack application with persistent storage to support [CRUDL](https://acronyms.thefreedictionary.com/CRUDL#:~:text=Acronym,Read%2C%20Update%2C%20Delete%2C%20List) operations of products. 
-
-- A product is an named uniquely identifiable item e.g. T-Shirt, Jumper etc.
-- A product is fungible: every instance of a product is equivalent. 
-- A product is specific and unique to a client (a merchant working with Quiver). Products can't be shared between merchants and can't be duplicated within merchants.
-
-### Extensions
-
-Products are no longer entirely fungible; they can have variations/options and therefore dimensions and weights. For example a T-Shirt sold by retailer x can be purchased in any combination of sizes and colours. Your application should be updated to support this added layer of complexity.
+- A product is an named uniquely identifiable item e.g. T-Shirt, Pencil etc.
+- A product can have variants (e.g T-Shirt (XS/Black), T-Shirt (S/Green), Pencil (2B), Pencil (HB)
+- A product is specific and unique to a merchant (e.g Zara, Ryman etc.). Products can't be shared between merchants and can't be duplicated within merchants.
 
 ### Technical requirements
 - Front-end should be written in React. At Quiver we use Next.js, but this is by no means a requirement. 
